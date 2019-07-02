@@ -63,4 +63,10 @@ const turnIntoCSV = R.compose(
   )
 )
 
-console.log(turnIntoCSV(filterSavings(transactions)))
+const convert = R.compose(
+  console.log,
+  turnIntoCSV,
+  filterSavings
+)
+
+convert(transactions)
