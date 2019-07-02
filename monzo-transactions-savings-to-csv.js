@@ -26,36 +26,39 @@ const filterSavings = R.compose(
   R.prop('transactions')
 )
 
+const getAmount = R.compose(
+  quote,
+  Math.abs,
+  R.divide(R.__, 100),
+  R.prop('amount')
+)
+
+const getCreated = R.compose(
+  quote,
+  x => dayjs(x).format('DD/MM/YYYY'),
+  R.prop('created')
+)
+
+const getDescription = R.compose(
+  quote,
+  R.trim,
+  R.prop('description')
+)
+
+const getNotes = R.compose(
+  quote,
+  R.trim,
+  R.replace(/\n/g, ' '),
+  R.defaultTo(''),
+  R.prop('notes')
+)
+
 const turnIntoCSV = R.compose(
   R.join('\n'),
   R.map(
     R.compose(
       R.join(','),
-      R.juxt([
-        R.compose(
-          quote,
-          Math.abs,
-          R.divide(R.__, 100),
-          R.prop('amount')
-        ),
-        R.compose(
-          quote,
-          x => dayjs(x).format('DD/MM/YYYY'),
-          R.prop('created')
-        ),
-        R.compose(
-          quote,
-          R.trim,
-          R.prop('description')
-        ),
-        R.compose(
-          quote,
-          R.trim,
-          R.replace(/\n/g, ' '),
-          R.defaultTo(''),
-          R.prop('notes')
-        )
-      ])
+      R.juxt([getAmount, getCreated, getDescription, getNotes])
     )
   )
 )
