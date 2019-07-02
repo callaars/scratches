@@ -1,0 +1,10 @@
+{
+  "name": "scratches",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "dayjs": "^1.8.14",
+    "ramda": "^0.26.1"
+  }
+}
